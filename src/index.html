@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    
+    <form class="form" autocomplete="off">
+      <input type="text" class="form-input" name="query" placeholder="Search images..." />
+      <button type="submit" class="form-btn">Search</button>      
+    </form>
+    <span class="loader"></span>
+    <ul class="gallery"></ul>
     <script type="module" src="./main.js"></script>
-    <!-- <script type="module" src="./js/pixabay-api.js"></script>
-    <script type="module" src="./js/render-functions.js"></script> -->
   </body>
 </html>

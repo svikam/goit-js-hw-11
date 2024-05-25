@@ -1,0 +1,97 @@
+.form {
+    margin-top: 36px;
+    text-align: center;
+}
+
+.form-input {
+    border: 1px solid #808080;
+    border-radius: 4px;
+    width: 272px;
+    height: 40px;
+    background: #fff;
+    padding: 0 16px;
+    
+}
+
+.form-input:hover {
+    border: 1px solid #000;
+}
+
+.form-input:focus,
+.form-input:active {
+    border: 1px solid #4e75ff;
+}
+
+.form-input::placeholder {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    color: #808080;
+}
+
+.form-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    width: 91px;
+    height: 40px;
+    background: #4e75ff;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    color: #fff;
+    margin-left: 8px;
+}
+
+.form-btn:hover {
+    background: #6c8cff;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    max-height: 1128px;
+}
+
+.gallery-item {
+    width: calc((100% - 48px) / 3);
+}
+
+.loader {
+    font-size: 48px;
+    color: #FFF;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    position: relative;
+}
+
+.loader:after {
+    content: 'Loading images, please wait...';
+    position: relative;
+    z-index: 5;
+}
+
+.loader:before {
+    content: '';
+    height: 6px;
+    border: 1px solid;
+    border-radius: 10px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    background: linear-gradient(#FF3D00 100%, transparent 0) no-repeat;
+    background-size: 0% auto;
+    animation: 10s lineGrow linear infinite;
+}
+
+@keyframes lineGrow {
+    to {
+        background-size: 100% auto
+    }
+}
