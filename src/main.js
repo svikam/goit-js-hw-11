@@ -1,63 +1,68 @@
 'use strict';
-// import iziToast from "izitoast";
-// import "izitoast/dist/css/iziToast.min.css";
-// import SimpleLightbox from "simplelightbox";
-// import "simplelightbox/dist/simple-lightbox.min.css";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-import searchImage from "./js/pixabay-api.js"
-import { imageTemplate, imagesTemplate } from "./js/render-functions.js"
-
-// вся логіка роботи додатка
+import { searchImage } from "./js/pixabay-api.js"
+import { imagesTemplate } from "./js/render-functions.js"
 
 const form = document.querySelector(".form");
-// const btn = document.querySelector(".form-btn");
 const gallery = document.querySelector(".gallery");
+const loader = document.querySelector(".loader");
 
-form.addEventListener("submit", event => {
+hideLoader();
+
+form.addEventListener("submit", handleSubmit);
+function handleSubmit(event) {
     event.preventDefault();
-    const userValue = event.target.elements.query.value.trim(); //те, що ввидиться в інпут користувачем
-    if (userValue === "") {
+    const query = event.target.elements.query.value.trim(); //те, що ввидиться в інпут користувачем
+    if (!query) {
         iziToast.show({
-        message: 'Please enter data',
-        backgroundColor: '##ffa000;',
-        messageSize: '16px',
-        messageColor: '#fafafb',
-        messageLineHeight: '150%',
-        position: 'bottomRight',
-        // theme: 'light', // dark
-        // icon: '',
-        // iconText: '',
-        // iconColor: '',    
-        });
-        return;
-    }
-    searchImage(userValue).then(data => {
-        const loader = document.querySelector(".loader");
-        loader.textContent = "Loading images, please wait...";
-        loader.textContent = "";
-        const markup = imagesTemplate(data.hits);
-        gallery.innerHTML = markup;
-        loader.textContent = "";
-        if ( = {}) {
-            iziToast.show({
-            message: 'Sorry, there are no images matching your search query. Please try again!',
-            backgroundColor: '#ef4040',
+            message: 'Please enter data',
+            backgroundColor: '##ffa000;',
             messageSize: '16px',
             messageColor: '#fafafb',
             messageLineHeight: '150%',
             position: 'bottomRight',
-            maxWidth: 432px,
-            // theme: 'light', // dark
-            // icon: '',
-            // iconText: '',
-            // iconColor: '',    
-            });
-        }
+        });
+        return;
+    }
+    gallery.innerHTML = "";
+    showLoader();
+    searchImage(query)
+        .then(data => {
+            const markup = imagesRender(data.hits);
+            if (data.hits.length === 0) {
+                iziToast.show({
+                    message: 'Sorry, there are no images matching your search query. Please try again!',
+                    backgroundColor: '#ef4040',
+                    messageSize: '16px',
+                    messageColor: '#fafafb',
+                    messageLineHeight: '150%',
+                    position: 'bottomRight',
+                });
+            } else {
+                gallery.innerHTML = markup;
+                const lightbox = new SimpleLightbox('.gallery a', {
+                    captionsData: 'alt',
+                    captionDelay: 250
+                });
+                lightbox.refresh();
+            }
+        });
+        .catch (error =>
+            console.log("catch", error));
+        .finally(() => {
+        event.target.reset();
+        hideLoader();
     });
-});
+}
 
+function showLoader() {
+    loader.style.display = 'block';
+}
 
-
-
-
-
+function hideLoader() {
+    loader.style.display = 'none';
+}

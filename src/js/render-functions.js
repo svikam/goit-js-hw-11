@@ -1,15 +1,25 @@
+// функції для відображення елементів інтерфейсу
 'use strict';
 
-// функції для відображення елементів інтерфейсу
-
-function imageTemplate(image) {
-    return `<li class="gallery-item">
-    <img src="${image.previewURL}" alt="image"/>
+export function imageRender(image) {
+    return `
+    <li class="gallery-item">
+        <a href="${image.largeImageURL}">
+            <img src="${image.webformatwURL}" alt="${image.tags}"/>
+            <p class="info-title">Likes:<span class="info-value> ${image.likes}</p>
+                <p class="info-title">Views:<span class="info-value> ${image.views}</p>
+                <p class="info-title">Coments:<span class="info-value> ${image.comments}</p>
+                <p class="info-title">Downloads:<span class="info-value> ${image.downloads}</p>           
+        </a>>
     </li>`
 }
 
-function imagesTemplate(arr) {
-    return arr.map(imageTemplate).join("");
+export function imagesRender(arr) {
+    return arr.map(imageRender).join("");
 }
 
-export { imageTemplate, imagesTemplate };
+
+
+
+
+// export { imageTemplate, imagesTemplate };
