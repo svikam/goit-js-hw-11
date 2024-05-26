@@ -5,7 +5,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 import { searchImage } from "./js/pixabay-api.js"
-import { imagesTemplate } from "./js/render-functions.js"
+import { imagesRender } from "./js/render-functions.js"
 
 const form = document.querySelector(".form");
 const gallery = document.querySelector(".gallery");
@@ -50,12 +50,6 @@ function handleSubmit(event) {
                 });
                 lightbox.refresh();
             }
-        });
-        .catch (error =>
-            console.log("catch", error));
-        .finally(() => {
-        event.target.reset();
-        hideLoader();
     });
 }
 

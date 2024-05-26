@@ -13,18 +13,5 @@ export function searchImage(query) {
     })
     const url = `${baseUrl}${endPoint}?${params}`;
     return fetch(url)
-        .then(response => response.json()); 
-        .catch (error => {
-        throw new Error(`HTTP error!: status ${response.status}`);
-    })
-    
-    // return fetch(url)
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error(response.statusText)
-    //         }
-    //         return response.json()
-    //     });
+        .then(response => response.json());
 }
-// export { searchImage };
-
