@@ -5,52 +5,57 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 import { searchImage } from "./js/pixabay-api.js"
-import { imagesRender } from "./js/render-functions.js"
+import { gallery, renderImages } from "./js/render-functions.js"
 
 const form = document.querySelector(".form");
-const gallery = document.querySelector(".gallery");
+const formInput = document.querySelector(".form-input");
 const loader = document.querySelector(".loader");
-
-hideLoader();
 
 form.addEventListener("submit", handleSubmit);
 function handleSubmit(event) {
     event.preventDefault();
-    const query = event.target.elements.query.value.trim(); //те, що ввидиться в інпут користувачем
+    const query = formInput.value.trim(); //те, що ввидиться в інпут користувачем...інакше event.target.elements.query.value.trim()
     if (!query) {
         iziToast.show({
             message: 'Please enter data',
-            backgroundColor: '##ffa000;',
+            backgroundColor: '#ffa000',
             messageSize: '16px',
             messageColor: '#fafafb',
             messageLineHeight: '150%',
-            position: 'bottomRight',
+            position: 'topRight',
         });
         return;
     }
     gallery.innerHTML = "";
     showLoader();
     searchImage(query)
-        .then(data => {
-            const markup = imagesRender(data.hits);
-            if (data.hits.length === 0) {
+        .then(images => {
+            if (images.length === 0) {
                 iziToast.show({
+
                     message: 'Sorry, there are no images matching your search query. Please try again!',
                     backgroundColor: '#ef4040',
                     messageSize: '16px',
                     messageColor: '#fafafb',
                     messageLineHeight: '150%',
-                    position: 'bottomRight',
+                    position: 'topRight',
                 });
             } else {
-                gallery.innerHTML = markup;
+                renderImages(images);
                 const lightbox = new SimpleLightbox('.gallery a', {
                     captionsData: 'alt',
-                    captionDelay: 250
+                    captionDelay: 250,
                 });
                 lightbox.refresh();
             }
-    });
+        })
+        .catch(error => {
+            console.log("catch", error);
+        })
+        .finally(() => {
+            hideLoader();
+            form.reset();
+        });
 }
 
 function showLoader() {
@@ -60,3 +65,9 @@ function showLoader() {
 function hideLoader() {
     loader.style.display = 'none';
 }
+
+
+
+
+
+

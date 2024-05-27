@@ -53,70 +53,127 @@
 .gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
-    max-height: 1128px;
+    gap: 20px;
+    max-width: 1128px;
+    margin: 0 auto;
+    margin-top: 32px;
 }
 
 .gallery-item {
     width: calc((100% - 48px) / 3);
+    border: 1px solid #808080;
+}
+
+.container {
+    height: 152px;
+    overflow: hidden;
+}
+
+.description {
+    display: flex;
+    margin-top: 4px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.label {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 133%;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
+}
+
+.value {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 200%;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
 }
 
 .loader {
-    font-size: 48px;
-    color: #FFF;
-    display: inline-block;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 400;
     position: relative;
+    width: 130px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(#0277bd, #0277bd),
+        linear-gradient(#29b6f6, #4fc3f7), linear-gradient(#29b6f6, #4fc3f7);
+    background-size: 80px 70px, 30px 50px, 30px 30px;
+    background-position: 0 0, 80px 20px, 100px 40px;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
 .loader:after {
-    content: 'Loading images, please wait...';
-    position: relative;
-    z-index: 5;
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 10px solid #000;
+    box-shadow: 78px 0 0 -10px #fff, 78px 0 #000;
+    animation: wheelSk 0.75s ease-in infinite alternate;
 }
 
 .loader:before {
-    content: '';
-    height: 6px;
-    border: 1px solid;
-    border-radius: 10px;
-    width: 100%;
+    content: "";
     position: absolute;
-    bottom: 0px;
-    background: linear-gradient(#FF3D00 100%, transparent 0) no-repeat;
-    background-size: 0% auto;
-    animation: 10s lineGrow linear infinite;
+    right: 100%;
+    top: 0px;
+    height: 70px;
+    width: 70px;
+    background-image: linear-gradient(#fff 45px, transparent 0),
+        linear-gradient(#fff 45px, transparent 0),
+        linear-gradient(#fff 45px, transparent 0);
+    background-repeat: no-repeat;
+    background-size: 30px 4px;
+    background-position: 0px 11px, 8px 35px, 0px 60px;
+    animation: lineDropping 0.75s linear infinite;
 }
 
-@keyframes lineGrow {
-    to {
-        background-size: 100% auto
-    }
-} 
-/* .loader {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+@keyframes wheelSk {
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
+    0%,
+    50%,
     100% {
-        transform: rotate(360deg);
+        transform: translatey(0)
+    }
+
+    30%,
+    90% {
+        transform: translatey(-3px)
     }
 }
 
-.hidden {
-    display: none;
-} */
+@keyframes lineDropping {
+    0% {
+        background-position: 100px 11px, 115px 35px, 105px 60px;
+        opacity: 1;
+    }
+
+    50% {
+        background-position: 0px 11px, 20px 35px, 5px 60px
+    }
+
+    60% {
+        background-position: -30px 11px, 0px 35px, -10px 60px
+    }
+
+    75%,
+    100% {
+        background-position: -30px 11px, -30px 35px, -30px 60px;
+        opacity: 0;
+    }
+}
